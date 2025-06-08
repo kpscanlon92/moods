@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './History.module.css';
 
 function History() {
     const [history, setHistory] = useState([]);
@@ -19,10 +20,10 @@ function History() {
 
     return (
         <div>
-            <ul className="history">
+            <ul className={styles.history}>
                 {history.map((entry) => (
                     <li key={entry._id}>
-                        <div className="history-item">
+                        <div className={styles.historyItem}>
                             <span>{entry.date}</span>
                             {Object.entries(entry.answers || {}).map(([q, a]) => (
                                 <p key={q}><em>{q}:</em> {Array.isArray(a) ? a.join(', ') : a}</p>

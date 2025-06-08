@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import styles from './Settings.module.css';
 
 function Settings() {
     const [user, setUser] = useState(null);
@@ -24,7 +25,7 @@ function Settings() {
             }
 
             try {
-                const res = await axios.get('http://localhost:4000/api/users/me', {
+                const res = await axios.get('http://localhost:4000/api/auth/me', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setUser(res.data);
@@ -51,7 +52,7 @@ function Settings() {
 
         try {
             await axios.post(
-                'http://localhost:4000/api/users/change-password',
+                'http://localhost:4000/api/auth/change-password',
                 { oldPassword, newPassword },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -73,7 +74,7 @@ function Settings() {
 
         try {
             await axios.post(
-                'http://localhost:4000/api/users/change-email',
+                'http://localhost:4000/api/auth/change-email',
                 { email: newEmail },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -89,7 +90,7 @@ function Settings() {
         if (!window.confirm('Are you sure you want to delete your account? This action is permanent.')) return;
 
         try {
-            await axios.delete('http://localhost:4000/api/users/delete', {
+            await axios.delete('http://localhost:4000/api/auth/delete', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             localStorage.removeItem('token');
@@ -100,16 +101,16 @@ function Settings() {
     };
 
     return (
-        <div className="card">
+        <div className={styles.container}>
             <h2>Settings</h2>
             {user ? (
                 <>
-                <div className="section">
+                <div className={styles.section}>
                     <p><strong>Logged in as:</strong> {user.email}</p>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
 
-                <div className="section">
+                <div className={styles.section}>
                     <h3>Change Email</h3>
                     <form onSubmit={handleChangeEmail}>
                         <label>
@@ -126,7 +127,7 @@ function Settings() {
                     {emailChangeMsg && <p>{emailChangeMsg}</p>}
                 </div>
 
-                <div className="section">
+                <div className={styles.section}>
                     <h3>Change Password</h3>
                     <form onSubmit={handleChangePassword}>
                         <label>
@@ -161,7 +162,7 @@ function Settings() {
                     {message && <p>{message}</p>}
                 </div>
 
-                <div className="section">
+                <div className={styles.section}>
                     <h3>Delete Account</h3>
                     <button onClick={handleDeleteAccount} style={{backgroundColor: 'red', color: 'white'}}>
                         Delete My Account

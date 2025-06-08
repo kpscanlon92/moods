@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './Tracker.module.css';
 
 function Tracker() {
     const [questions, setQuestions] = useState([]);
@@ -46,11 +47,11 @@ function Tracker() {
     };
 
     return (
-        <div className="card">
+        <div className={styles.container}>
             {questions.map((q) => (
-                <div key={q.questionId} className="question-block">
+                <div key={q.questionId} className={styles.questionBlock}>
                     <label>{q.questionText}</label>
-                    <div className="answer-block">
+                    <div className={styles.answerBlock}>
                         {q.options.map((option) => (
                             <label key={option}>
                                 <input

@@ -1,84 +1,84 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Login({ setUser }) {
+    const [isRegistering, setIsRegistering] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState('');
+    const [msg, setMsg] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-    const validateForm = () => {
-        const newErrors = {};
-
-        if (!email) {
-            newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.email = 'Email is invalid';
-        }
-
-        if (!password) {
-            newErrors.password = 'Password is required';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setServerError('');
+        setLoading(true);
+        setMsg('');
 
-        if (!validateForm()) return;
+        const endpoint = isRegistering ? 'register' : 'login';
 
         try {
-            const res = await axios.post('http://localhost:4000/api/users/login', {
-                email,
-                password,
-            });
-
-            const { token, user } = res.data;
-            localStorage.setItem('token', token);
-            setUser(user);
+            const res = await axios.post(`http://localhost:4000/api/auth/${endpoint}`, { email, password });
+            localStorage.setItem('token', res.data.token);
+            setUser(res.data.user);
             navigate('/');
         } catch (err) {
-            if (err.response?.data?.error) {
-                setServerError(err.response.data.error);
+            if (err.response) {
+                const status = err.response.status;
+                const errorMessage = err.response.data.message;
+
+                if (status === 400 || status === 401) {
+                    setMsg(errorMessage || 'Invalid credentials.');
+                } else if (status === 409) {
+                    setMsg('Account already exists. Try logging in.');
+                } else {
+                    setMsg('Server error. Please try again later.');
+                }
             } else {
-                setServerError('Login failed. Please try again.');
+                setMsg('Network error. Check your internet connection.');
             }
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="card">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit} noValidate>
+        <div style={{ maxWidth: 400, margin: '0 auto', padding: '2rem' }}>
+            <h2>{isRegistering ? 'Register' : 'Login'}</h2>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="email"
-                    placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                /><br/>
-                {errors.email && <div className="error">{errors.email}</div>}
-
+                    placeholder="Email"
+                    required
+                    style={{ display: 'block', width: '100%', marginBottom: '1rem' }}
+                />
                 <input
                     type="password"
-                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                /><br/>
-                {errors.password && <div className="error">{errors.password}</div>}
-
-                {serverError && <div className="error server">{serverError}</div>}
-
-                <button type="submit">Log In</button>
-                <br/>
+                    placeholder="Password"
+                    required
+                    style={{ display: 'block', width: '100%', marginBottom: '1rem' }}
+                />
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Please wait…' : isRegistering ? 'Register' : 'Login'}
+                </button>
+                {msg && <p style={{ color: 'red', marginTop: '1rem' }}>{msg}</p>}
             </form>
 
-            <p>
-                Don't have an account? <Link to="/register">Sign up</Link>
+            <p style={{ marginTop: '1rem' }}>
+                {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
+                <button
+                    onClick={() => {
+                        setIsRegistering(!isRegistering);
+                        setMsg('');
+                    }}
+                    style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer' }}
+                >
+                    {isRegistering ? 'Login' : 'Register'}
+                </button>
             </p>
         </div>
     );
