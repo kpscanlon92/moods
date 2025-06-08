@@ -79,7 +79,6 @@ const questions = [
 ];
 
 try {
-    await Question.deleteMany({});
     await Question.insertMany(questions);
     console.log('✅ Questions seeded!');
     process.exit();

@@ -35,7 +35,7 @@ function mergeOtherAnswers(answers) {
 }
 
 
-router.post('/api/moods', async (req, res) => {
+router.post('/moods', async (req, res) => {
     try {
         let { userId, answers } = req.body;
 

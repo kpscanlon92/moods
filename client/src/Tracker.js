@@ -51,31 +51,25 @@ function Tracker() {
                 <div key={q.questionId} className="question-block">
                     <label>{q.questionText}</label>
                     <div className="answer-block">
-                        {q.type === 'radio' &&
-                            q.options.map((option) => (
-                                <label key={option}>
+                        {q.options.map((option) => (
+                            <label key={option}>
+                                <input
+                                    type={q.type}
+                                    value={option}
+                                    checked={answers[q.questionId]?.includes(option) || false}
+                                    onChange={() => handleChange(q.questionId, option, q.type)}
+                                />
+                                {option}
+                                {option === 'Other' && answers[q.questionId]?.includes('Other') &&
                                     <input
-                                        type="radio"
-                                        name={q.questionId}
-                                        value={option}
-                                        checked={answers[q.questionId] === option}
-                                        onChange={() => handleChange(q.questionId, option, q.type)}
+                                        type="text"
+                                        value={answers[q.questionId + '_other'] || ''}
+                                        placeholder="Please specify"
+                                        onChange={(e) => handleChange(q.questionId + '_other', e.target.value, "text")}
                                     />
-                                    {option}
-                                </label>
-                            ))}
-                        {q.type === 'checkbox' &&
-                            q.options.map((option) => (
-                                <label key={option}>
-                                    <input
-                                        type="checkbox"
-                                        value={option}
-                                        checked={answers[q.questionId]?.includes(option) || false}
-                                        onChange={() => handleChange(q.questionId, option, q.type)}
-                                    />
-                                    {option}
-                                </label>
-                            ))}
+                            }
+                            </label>
+                        ))}
                         {q.type === 'text' && (
                             <input
                                 type="text"

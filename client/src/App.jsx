@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
 import Tracker from './Tracker';
 import History from './History';
+import Register from './Register';
+import Login from './Login';
+import Settings from './Settings';
+import Unauthorized from "./Unauthorized";
 import './App.css';
 
 function Header({ toggleMenu, menuOpen }) {
@@ -11,6 +15,8 @@ function Header({ toggleMenu, menuOpen }) {
         switch (location.pathname) {
             case '/history':
                 return 'Mood History';
+            case '/settings':
+                return 'Settings';
             default:
                 return 'Mood Tracker';
         }
@@ -32,6 +38,7 @@ function Header({ toggleMenu, menuOpen }) {
                 <nav className="dropdown-menu">
                     <Link to="/" onClick={toggleMenu}>Mood Tracker</Link>
                     <Link to="/history" onClick={toggleMenu}>Mood History</Link>
+                    <Link to="/settings">Settings</Link>
                 </nav>
             )}
         </header>
@@ -40,16 +47,27 @@ function Header({ toggleMenu, menuOpen }) {
 
 function App() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [user, setUser] = useState(null);
 
     const toggleMenu = () => setMenuOpen((prev) => !prev);
 
     return (
         <Router>
-            <Header toggleMenu={toggleMenu} menuOpen={menuOpen} />
-            <main className="container">
+            <Header menuOpen={menuOpen} toggleMenu={toggleMenu} />
+            <main className="main-content">
                 <Routes>
-                    <Route path="/" element={<Tracker />} />
-                    <Route path="/history" element={<History />} />
+                    <Route path="/login" element={<Login setUser={setUser} />} />
+                    <Route path="/register" element={<Register setUser={setUser} />} />
+                    {user ? (
+                        <>
+                            <Route path="/" element={<Tracker user={user} />} />
+                            <Route path="/history" element={<History user={user} />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="/unauthorized" element={<Unauthorized />} />
+                        </>
+                    ) : (
+                        <Route path="*" element={<Navigate to="/login" />} />
+                    )}
                 </Routes>
             </main>
         </Router>

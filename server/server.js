@@ -3,7 +3,12 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import moodRoutes from './routes/moodRoutes.js';
 import questionRoutes from './routes/questionRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import dotenv from "dotenv";
+
+dotenv.config();
+const uri = process.env.MONGO_URI;
+await mongoose.connect(uri);
 
 const app = express();
 app.use(cors());
@@ -11,10 +16,8 @@ app.use(express.json());
 
 app.use('/api', moodRoutes);
 app.use('/api', questionRoutes);
+app.use('/api', authRoutes);
 
-dotenv.config();
-const uri = process.env.MONGO_URI;
-await mongoose.connect(uri);
 
 const port = 4000;
 app.listen(port, () => {
