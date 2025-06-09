@@ -118,13 +118,10 @@ function Settings() {
 
             {user ? (
                 <>
-                    <Box mb={4}>
+                    <Box>
                         <Typography variant="subtitle1" gutterBottom>
                             Logged in as: <strong>{user.email}</strong>
                         </Typography>
-                        <Button variant="outlined" onClick={handleLogout}>
-                            Logout
-                        </Button>
                     </Box>
 
                     <Divider sx={{ my: 3 }} />
@@ -186,12 +183,14 @@ function Settings() {
                     <Divider sx={{ my: 3 }} />
 
                     <Box mb={4}>
-                        <Typography variant="h6" gutterBottom>
-                            Delete Account
-                        </Typography>
-                        <Button variant="contained" color="error" onClick={handleDeleteAccount}>
-                            Delete My Account
-                        </Button>
+                        <Stack spacing={2}>
+                            <Button variant="outlined" onClick={handleLogout}>
+                                Logout
+                            </Button>
+                            <Button variant="contained" color="error" onClick={handleDeleteAccount}>
+                                Delete My Account
+                            </Button>
+                        </Stack>
                     </Box>
                 </>
             ) : (
