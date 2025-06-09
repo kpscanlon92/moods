@@ -12,7 +12,7 @@ import configurePassport from './config/passport.js'
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({origin: "https://moods-frontend.onrender.com"}));
 app.use(express.json());
 app.use(passport.initialize());
 configurePassport(passport, process.env.JWT_SECRET);
