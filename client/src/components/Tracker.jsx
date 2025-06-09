@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import {
+    Container,
     Box,
     Typography,
     TextField,
@@ -60,14 +61,14 @@ function Tracker() {
             );
             setAnswers({});
             alert('Mood saved!');
-            navigate('/components/history');
+            navigate('/components/');
         } catch (error) {
             console.error('Error submitting mood:', error);
         }
     };
 
     return (
-        <Box sx={{ maxWidth: 800, mx: 'auto', p: 4 }}>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
             <Typography variant="h4" gutterBottom>
                 Track Your Mood
             </Typography>
@@ -80,7 +81,7 @@ function Tracker() {
                         {q.type === 'checkbox' && (
                             <FormGroup>
                                 {q.options.map((option) => (
-                                    <Box key={option} sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
+                                    <Box key={option} sx={{ display: 'flex', alignItems: 'center' }}>
                                         <FormControlLabel sx={{ m: 0 }}
                                             control={
                                                 <Checkbox
@@ -142,7 +143,7 @@ function Tracker() {
             >
                 Submit Mood
             </Button>
-        </Box>
+        </Container>
     );
 }
 

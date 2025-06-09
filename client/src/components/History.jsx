@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import {
+    Container,
     Box,
     Typography,
     List,
@@ -53,7 +54,7 @@ function History() {
     }, [navigate]);
 
     return (
-        <Box sx={{ maxWidth: 800, mx: 'auto', p: 4 }}>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
             <Typography variant="h4" gutterBottom>
                 History Summary
             </Typography>
@@ -110,7 +111,7 @@ function History() {
                     <Typography>No stats available.</Typography>
                 )}
             </Box>
-        </Box>
+        </Container>
     );
 }
 

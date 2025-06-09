@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import {
-    Box,
+    Container,
     Typography,
     Button,
     Stack,
@@ -8,7 +8,7 @@ import {
 
 export default function Home() {
     return (
-        <Box sx={{ maxWidth: 600, mx: 'auto', p: 4 }}>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
             <Typography variant="h4" gutterBottom>
                 Welcome to your Mood Tracker
             </Typography>
@@ -39,6 +39,6 @@ export default function Home() {
                     Settings
                 </Button>
             </Stack>
-        </Box>
+        </Container>
     );
 }
