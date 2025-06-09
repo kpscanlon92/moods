@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
-import Home from './Home';
-import Tracker from './Tracker';
-import History from './History';
-import Login from './Login';
-import Settings from './Settings';
-import Unauthorized from "./Unauthorized";
-import styles from './App.module.css';
+import Home from './components/Home';
+import Tracker from './components/Tracker';
+import History from './components/History';
+import Login from './components/Login';
+import Settings from './components/Settings';
+import Unauthorized from "./components/Unauthorized";
+import styles from './styles/App.module.css';
 
 function Header({ toggleMenu, menuOpen }) {
     const location = useLocation();
 
     const getPageTitle = () => {
         switch (location.pathname) {
-            case '/login':
+            case '/components/login':
                 return 'Login'
-            case '/tracker':
+            case '/components/tracker':
                 return 'Mood Tracker';
-            case '/history':
+            case '/components/history':
                 return 'Mood History';
-            case '/settings':
+            case '/components/settings':
                 return 'Settings';
             default:
                 return 'Home';
@@ -40,10 +40,10 @@ function Header({ toggleMenu, menuOpen }) {
             </div>
             {menuOpen && (
                 <nav className={styles.dropdownMenu}>
-                    <Link to="/" onClick={toggleMenu}>Home</Link>
-                    <Link to="/tracker" onClick={toggleMenu}>Mood Tracker</Link>
-                    <Link to="/history" onClick={toggleMenu}>Mood History</Link>
-                    <Link to="/settings">Settings</Link>
+                    <Link to="/components/" onClick={toggleMenu}>Home</Link>
+                    <Link to="/components/tracker" onClick={toggleMenu}>Mood Tracker</Link>
+                    <Link to="/components/history" onClick={toggleMenu}>Mood History</Link>
+                    <Link to="/components/settings">Settings</Link>
                 </nav>
             )}
         </header>
@@ -62,17 +62,17 @@ function App() {
                 <Header menuOpen={menuOpen} toggleMenu={toggleMenu}/>
                 <main className={styles.mainContent}>
                     <Routes>
-                        <Route path="/login" element={<Login setUser={setUser}/>}/>
+                        <Route path="/components/login" element={<Login setUser={setUser}/>}/>
                         {user ? (
                             <>
-                                <Route path="/" element={<Home user={user}/>}/>
-                                <Route path="/tracker" element={<Tracker user={user}/>}/>
-                                <Route path="/history" element={<History user={user}/>}/>
-                                <Route path="/settings" element={<Settings/>}/>
-                                <Route path="/unauthorized" element={<Unauthorized/>}/>
+                                <Route path="/components/" element={<Home user={user}/>}/>
+                                <Route path="/components/tracker" element={<Tracker user={user}/>}/>
+                                <Route path="/components/history" element={<History user={user}/>}/>
+                                <Route path="/components/settings" element={<Settings/>}/>
+                                <Route path="/components/unauthorized" element={<Unauthorized/>}/>
                             </>
                         ) : (
-                            <Route path="*" element={<Navigate to="/login"/>}/>
+                            <Route path="*" element={<Navigate to="/components/login"/>}/>
                         )}
                     </Routes>
                 </main>

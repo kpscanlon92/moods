@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './History.module.css';
+import styles from '../styles/History.module.css';
 
 function History() {
     const [history, setHistory] = useState([]);

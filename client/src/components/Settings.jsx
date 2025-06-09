@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './Settings.module.css';
+import styles from '../styles/Settings.module.css';
 
 function Settings() {
     const [user, setUser] = useState(null);

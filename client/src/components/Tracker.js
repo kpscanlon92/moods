@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './Tracker.module.css';
+import styles from '../styles/Tracker.module.css';
 
 function Tracker() {
     const [questions, setQuestions] = useState([]);

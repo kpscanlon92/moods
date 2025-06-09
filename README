@@ -1,0 +1,76 @@
+# Mood Tracker API
+
+A full-stack application that allows users to log daily mood and reflection entries, analyze trends, and gain insights from their responses. Built with Node.js, Express, MongoDB, Passport.js (JWT authentication), and React.
+
+---
+
+## 🚀 Features
+
+* User authentication with JWT
+* Mood and reflection entry logging
+* Data stored in MongoDB
+* History viewer
+* Settings page
+
+---
+
+## 📁 Project Structure
+
+```
+BACKEND
+server/
+├── config/
+├── middleware/
+├── models/
+├── routes/
+├── .env
+├── package.json
+├── server.js
+
+FRONTEND
+client/
+├── public/
+│   ├── index.html
+├── src/
+│   ├── components/
+│   ├── styles/
+│   ├── App.jsx
+│   ├── index.js
+├── package.json
+
+---
+
+## 🔐 Authentication
+
+* JWT-based using Passport.js
+* Tokens stored in localStorage on frontend
+
+---
+
+## 🌱 Environment Variables (`.env`)
+
+```env
+MONGO_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+```
+
+---
+
+## 📦 Dependencies
+
+### Backend
+
+* express
+* mongoose
+* dotenv
+* cors
+* passport
+* passport-jwt
+* jsonwebtoken
+
+### Frontend
+
+* axios
+* react
+* react-router-dom
+
