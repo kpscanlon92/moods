@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import {
     Box,
     Typography,
@@ -24,7 +24,7 @@ function Tracker() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get('http://localhost:4000/api/questions');
+                const res = await api.get('/api/questions');
                 setQuestions(res.data);
             } catch (error) {
                 console.error('Error fetching questions:', error);
@@ -54,8 +54,7 @@ function Tracker() {
                 navigate('/components/unauthorized');
                 return;
             }
-            await axios.post(
-                'http://localhost:4000/api/moods',
+            await api.post('/api/moods',
                 { answers },
                 { headers: { Authorization: `Bearer ${token}` }, }
             );

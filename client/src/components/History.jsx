@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -23,7 +23,7 @@ function History() {
                     navigate('/components/unauthorized');
                     return;
                 }
-                const res = await axios.get('http://localhost:4000/api/stats', {
+                const res = await api.get('/api/stats', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -41,7 +41,7 @@ function History() {
                     navigate('/components/unauthorized');
                     return;
                 }
-                const res = await axios.get(`http://localhost:4000/api/history`, {
+                const res = await api.get(`/api/history`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

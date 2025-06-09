@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -29,7 +29,7 @@ function Login({ setUser }) {
         const endpoint = isRegistering ? 'register' : 'login';
 
         try {
-            const res = await axios.post(`http://localhost:4000/api/auth/${endpoint}`, {
+            const res = await api.post(`/api/auth/${endpoint}`, {
                 email,
                 password,
             });

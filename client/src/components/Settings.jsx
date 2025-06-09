@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 
 import {
     Container,
@@ -35,7 +35,7 @@ function Settings() {
             }
 
             try {
-                const res = await axios.get('http://localhost:4000/api/auth/me', {
+                const res = await api.get('/api/auth/me', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setUser(res.data);
@@ -61,8 +61,8 @@ function Settings() {
         }
 
         try {
-            await axios.post(
-                'http://localhost:4000/api/auth/change-password',
+            await api.post(
+                '/api/auth/change-password',
                 { oldPassword, newPassword },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -83,8 +83,8 @@ function Settings() {
         }
 
         try {
-            await axios.post(
-                'http://localhost:4000/api/auth/change-email',
+            await api.post(
+                '/api/auth/change-email',
                 { email: newEmail },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -100,7 +100,7 @@ function Settings() {
         if (!window.confirm('Are you sure you want to delete your account? This action is permanent.')) return;
 
         try {
-            await axios.delete('http://localhost:4000/api/auth/delete', {
+            await api.delete('/api/auth/delete', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             localStorage.removeItem('token');
