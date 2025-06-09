@@ -60,6 +60,7 @@ function Tracker() {
             );
             setAnswers({});
             alert('Mood saved!');
+            navigate('/components/history');
         } catch (error) {
             console.error('Error submitting mood:', error);
         }

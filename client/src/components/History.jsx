@@ -24,9 +24,7 @@ function History() {
                     return;
                 }
                 const res = await api.get('/api/stats', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(res.data);
             } catch (err) {
@@ -42,9 +40,7 @@ function History() {
                     return;
                 }
                 const res = await api.get(`/api/history`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 setHistory(res.data);
             } catch (error) {

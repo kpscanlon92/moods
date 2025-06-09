@@ -59,7 +59,7 @@ router.post('/change-password', passport.authenticate('jwt', { session: false })
     }
 });
 
-router.put('/change-email', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/change-email', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { email } = req.body;
 
     if (!email) return res.status(400).json({ message: 'Email is required' });
