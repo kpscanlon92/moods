@@ -5,7 +5,7 @@ import styles from './Tracker.module.css';
 function Tracker() {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
-    const userId = 'demoUser';
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -36,8 +36,11 @@ function Tracker() {
     const submitMood = async () => {
         try {
             await axios.post('http://localhost:4000/api/moods', {
-                userId,
                 answers
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
             setAnswers({});
             alert('Mood saved!');
