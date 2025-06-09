@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from '../styles/Settings.module.css';
+
+import {
+    Container,
+    Typography,
+    TextField,
+    Button,
+    Box,
+    Alert,
+    Divider,
+    Stack,
+} from '@mui/material';
 
 function Settings() {
     const [user, setUser] = useState(null);
@@ -20,7 +30,7 @@ function Settings() {
     useEffect(() => {
         const fetchUser = async () => {
             if (!token) {
-                navigate('/unauthorized');
+                navigate('/components/unauthorized');
                 return;
             }
 
@@ -31,7 +41,7 @@ function Settings() {
                 setUser(res.data);
             } catch (err) {
                 localStorage.removeItem('token');
-                navigate('/unauthorized');
+                navigate('/components/unauthorized');
             }
         };
 
@@ -40,7 +50,7 @@ function Settings() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/components/login');
     };
 
     const handleChangePassword = async (e) => {
@@ -101,76 +111,93 @@ function Settings() {
     };
 
     return (
-        <div className={styles.container}>
-            <h2>Settings</h2>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
+            <Typography variant="h4" gutterBottom>
+                Settings
+            </Typography>
+
             {user ? (
                 <>
-                <div className={styles.section}>
-                    <p><strong>Logged in as:</strong> {user.email}</p>
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
+                    <Box mb={4}>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Logged in as: <strong>{user.email}</strong>
+                        </Typography>
+                        <Button variant="outlined" onClick={handleLogout}>
+                            Logout
+                        </Button>
+                    </Box>
 
-                <div className={styles.section}>
-                    <h3>Change Email</h3>
-                    <form onSubmit={handleChangeEmail}>
-                        <label>
-                            New Email:
-                            <input
+                    <Divider sx={{ my: 3 }} />
+
+                    <Box component="form" onSubmit={handleChangeEmail} mb={4}>
+                        <Typography variant="h6" gutterBottom>
+                            Change Email
+                        </Typography>
+                        <Stack spacing={2}>
+                            <TextField
+                                label="New Email"
                                 type="email"
                                 value={newEmail}
                                 onChange={(e) => setNewEmail(e.target.value)}
                                 required
                             />
-                        </label>
-                        <button type="submit">Update Email</button>
-                    </form>
-                    {emailChangeMsg && <p>{emailChangeMsg}</p>}
-                </div>
+                            <Button type="submit" variant="contained">
+                                Update Email
+                            </Button>
+                            {emailChangeMsg && <Alert severity={emailChangeMsg.includes('success') ? 'success' : 'error'}>{emailChangeMsg}</Alert>}
+                        </Stack>
+                    </Box>
 
-                <div className={styles.section}>
-                    <h3>Change Password</h3>
-                    <form onSubmit={handleChangePassword}>
-                        <label>
-                            Current Password:
-                            <input
+                    <Divider sx={{ my: 3 }} />
+
+                    <Box component="form" onSubmit={handleChangePassword} mb={4}>
+                        <Typography variant="h6" gutterBottom>
+                            Change Password
+                        </Typography>
+                        <Stack spacing={2}>
+                            <TextField
+                                label="Current Password"
                                 type="password"
                                 value={oldPassword}
                                 onChange={(e) => setOldPassword(e.target.value)}
                                 required
                             />
-                        </label>
-                        <label>
-                            New Password:
-                            <input
+                            <TextField
+                                label="New Password"
                                 type="password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required
                             />
-                        </label>
-                        <label>
-                            Confirm New Password:
-                            <input
+                            <TextField
+                                label="Confirm New Password"
                                 type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
-                        </label>
-                        <button type="submit">Update Password</button>
-                    </form>
-                    {message && <p>{message}</p>}
-                </div>
+                            <Button type="submit" variant="contained">
+                                Update Password
+                            </Button>
+                            {message && <Alert severity={message.includes('success') ? 'success' : 'error'}>{message}</Alert>}
+                        </Stack>
+                    </Box>
 
-                <div className={styles.section}>
-                    <h3>Delete Account</h3>
-                    <button onClick={handleDeleteAccount} style={{backgroundColor: 'red', color: 'white'}}>
-                        Delete My Account
-                    </button>
-                </div>
-            </>
-            ) : (<p>Loading user info...</p>)}
-        </div>
+                    <Divider sx={{ my: 3 }} />
+
+                    <Box mb={4}>
+                        <Typography variant="h6" gutterBottom>
+                            Delete Account
+                        </Typography>
+                        <Button variant="contained" color="error" onClick={handleDeleteAccount}>
+                            Delete My Account
+                        </Button>
+                    </Box>
+                </>
+            ) : (
+                <Typography>Loading user info...</Typography>
+            )}
+        </Container>
     );
 }
 

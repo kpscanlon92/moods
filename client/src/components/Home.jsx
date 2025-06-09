@@ -1,17 +1,44 @@
-import { Link } from "react-router-dom";
-import styles from "../styles/Home.module.css";
+import { Link as RouterLink } from 'react-router-dom';
+import {
+    Box,
+    Typography,
+    Button,
+    Stack,
+} from '@mui/material';
 
 export default function Home() {
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Welcome to your Mood Tracker</h1>
-            <p className={styles.subtitle}>Choose where you’d like to go:</p>
+        <Box sx={{ maxWidth: 600, mx: 'auto', p: 4 }}>
+            <Typography variant="h4" gutterBottom>
+                Welcome to your Mood Tracker
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+                Choose where you’d like to go:
+            </Typography>
 
-            <div className={styles.links}>
-                <Link to="/tracker" className={styles.link}>Track Your Mood</Link>
-                <Link to="/history" className={styles.link}>Mood History</Link>
-                <Link to="/settings" className={styles.link}>Settings</Link>
-            </div>
-        </div>
+            <Stack spacing={2} sx={{ mt: 4 }}>
+                <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/components/tracker"
+                >
+                    Track Your Mood
+                </Button>
+                <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/components/history"
+                >
+                    Mood History
+                </Button>
+                <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/components/settings"
+                >
+                    Settings
+                </Button>
+            </Stack>
+        </Box>
     );
 }

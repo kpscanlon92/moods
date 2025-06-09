@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+    Container,
+    Paper,
+    Typography,
+    TextField,
+    Button,
+    CircularProgress,
+    Alert,
+    Box,
+    Link
+} from '@mui/material';
 
 function Login({ setUser }) {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -18,10 +29,13 @@ function Login({ setUser }) {
         const endpoint = isRegistering ? 'register' : 'login';
 
         try {
-            const res = await axios.post(`http://localhost:4000/api/auth/${endpoint}`, { email, password });
+            const res = await axios.post(`http://localhost:4000/api/auth/${endpoint}`, {
+                email,
+                password,
+            });
             localStorage.setItem('token', res.data.token);
             setUser(res.data.user);
-            navigate('/');
+            navigate('/components/');
         } catch (err) {
             if (err.response) {
                 const status = err.response.status;
@@ -43,44 +57,64 @@ function Login({ setUser }) {
     };
 
     return (
-        <div style={{ maxWidth: 400, margin: '0 auto', padding: '2rem' }}>
-            <h2>{isRegistering ? 'Register' : 'Login'}</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    required
-                    style={{ display: 'block', width: '100%', marginBottom: '1rem' }}
-                />
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    required
-                    style={{ display: 'block', width: '100%', marginBottom: '1rem' }}
-                />
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Please wait…' : isRegistering ? 'Register' : 'Login'}
-                </button>
-                {msg && <p style={{ color: 'red', marginTop: '1rem' }}>{msg}</p>}
-            </form>
+        <Container maxWidth="sm">
+            <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+                <Typography variant="h4" gutterBottom>
+                    {isRegistering ? 'Register' : 'Login'}
+                </Typography>
 
-            <p style={{ marginTop: '1rem' }}>
-                {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
-                <button
-                    onClick={() => {
-                        setIsRegistering(!isRegistering);
-                        setMsg('');
-                    }}
-                    style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer' }}
-                >
-                    {isRegistering ? 'Login' : 'Register'}
-                </button>
-            </p>
-        </div>
+                {msg && (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {msg}
+                    </Alert>
+                )}
+
+                <Box component="form" onSubmit={handleSubmit}>
+                    <TextField
+                        fullWidth
+                        label="Email"
+                        type="email"
+                        margin="normal"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <TextField
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        margin="normal"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        disabled={loading}
+                    >
+                        {loading ? <CircularProgress size={24} /> : isRegistering ? 'Register' : 'Login'}
+                    </Button>
+                </Box>
+
+                <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+                    {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
+                    <Link
+                        component="button"
+                        onClick={() => {
+                            setIsRegistering(!isRegistering);
+                            setMsg('');
+                        }}
+                    >
+                        {isRegistering ? 'Login' : 'Register'}
+                    </Link>
+                </Typography>
+            </Paper>
+        </Container>
     );
 }
 
