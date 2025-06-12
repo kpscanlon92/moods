@@ -1,0 +1,20 @@
+{
+  "name": "moodcheck",
+  "version": "1.0.0",
+  "description": "A full-stack application that allows users to log daily mood and reflection entries, analyze trends, and gain insights from their responses. Built with Node.js, Express, MongoDB, Passport.js (JWT authentication), and React.",
+  "homepage": "https://github.com/kpscanlon92/moods#readme",
+  "bugs": {
+    "url": "https://github.com/kpscanlon92/moods/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kpscanlon92/moods.git"
+  },
+  "license": "ISC",
+  "author": "Kelly Scanlon",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  }
+}

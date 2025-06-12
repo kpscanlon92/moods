@@ -2,7 +2,8 @@
   "name": "mood-check-server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -16,5 +17,14 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@types/jest": "^29.5.14",
+    "babel-jest": "^30.0.0",
+    "jest": "^30.0.0",
+    "mongodb-memory-server": "^10.1.4",
+    "supertest": "^7.1.1"
   }
 }
