@@ -16,7 +16,7 @@ const getCorsOrigin = () => {
     if (env === 'production') {
         return 'https://moods-frontend.onrender.com';
     }
-    return 'http://localhost:3000';
+    return 'http://localhost:5173';
 };
 const corsOptions = {
     origin: getCorsOrigin()

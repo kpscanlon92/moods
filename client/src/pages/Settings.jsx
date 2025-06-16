@@ -104,7 +104,7 @@ function Settings() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             localStorage.removeItem('token');
-            navigate('/auth/register');
+            navigate('/api/auth/register');
         } catch (err) {
             alert(err.response?.data?.message || 'Failed to delete account.');
         }
