@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../api';
+import api from '../utils/api.js';
 import { useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -21,7 +21,7 @@ function History() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    navigate('/components/unauthorized');
+                    navigate('/pages/unauthorized');
                     return;
                 }
                 const res = await api.get('/api/stats', {
@@ -37,7 +37,7 @@ function History() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    navigate('/components/unauthorized');
+                    navigate('/pages/unauthorized');
                     return;
                 }
                 const res = await api.get(`/api/history`, {

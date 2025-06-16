@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api from '../utils/api.js';
 import {
     Container,
     Box,
@@ -52,7 +52,7 @@ function Tracker() {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                navigate('/components/unauthorized');
+                navigate('/pages/unauthorized');
                 return;
             }
             await api.post('/api/moods',
@@ -61,7 +61,7 @@ function Tracker() {
             );
             setAnswers({});
             alert('Mood saved!');
-            navigate('/components/');
+            navigate('/pages');
         } catch (error) {
             console.error('Error submitting mood:', error);
         }

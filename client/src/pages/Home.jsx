@@ -20,21 +20,21 @@ export default function Home() {
                 <Button
                     variant="contained"
                     component={RouterLink}
-                    to="/components/tracker"
+                    to="/pages/tracker"
                 >
                     Track Your Mood
                 </Button>
                 <Button
                     variant="contained"
                     component={RouterLink}
-                    to="/components/history"
+                    to="/pages/history"
                 >
                     Mood History
                 </Button>
                 <Button
                     variant="contained"
                     component={RouterLink}
-                    to="/components/settings"
+                    to="/pages/settings"
                 >
                     Settings
                 </Button>

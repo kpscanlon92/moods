@@ -22,12 +22,12 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import Home from './components/Home';
-import Tracker from './components/Tracker';
-import History from './components/History';
-import Login from './components/Login';
-import Settings from './components/Settings';
-import Unauthorized from './components/Unauthorized';
+import Home from './pages/Home';
+import Tracker from './pages/Tracker';
+import History from './pages/History';
+import Login from './pages/Login';
+import Settings from './pages/Settings';
+import Unauthorized from './pages/Unauthorized';
 
 function Header({ toggleMenu, getPageTitle }) {
     return (
@@ -52,13 +52,13 @@ function AppLayout({ user, setUser }) {
 
     const getPageTitle = () => {
         switch (location.pathname) {
-            case '/components/login':
+            case '/pages/login':
                 return 'Login';
-            case '/components/tracker':
+            case '/pages/tracker':
                 return 'Mood Tracker';
-            case '/components/history':
+            case '/pages/history':
                 return 'Mood History';
-            case '/components/settings':
+            case '/pages/settings':
                 return 'Settings';
             default:
                 return 'Home';
@@ -70,22 +70,22 @@ function AppLayout({ user, setUser }) {
             <Box role="presentation" onClick={toggleMenu} sx={{ width: 250 }}>
                 <List>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to="/components/">
+                        <ListItemButton component={Link} to="/pages/">
                             <ListItemText primary="Home" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to="/components/tracker">
+                        <ListItemButton component={Link} to="/pages/tracker">
                             <ListItemText primary="Mood Tracker" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to="/components/history">
+                        <ListItemButton component={Link} to="/pages/history">
                             <ListItemText primary="Mood History" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to="/components/settings">
+                        <ListItemButton component={Link} to="/pages/settings">
                             <ListItemText primary="Settings" />
                         </ListItemButton>
                     </ListItem>
@@ -102,17 +102,17 @@ function AppLayout({ user, setUser }) {
 
             <Box component="main" sx={{ p: 3 }}>
                 <Routes>
-                    <Route path="/components/login" element={<Login setUser={setUser} />} />
+                    <Route path="/pages/login" element={<Login setUser={setUser} />} />
                     {user ? (
                         <>
-                            <Route path="/components/" element={<Home user={user} />} />
-                            <Route path="/components/tracker" element={<Tracker user={user} />} />
-                            <Route path="/components/history" element={<History user={user} />} />
-                            <Route path="/components/settings" element={<Settings user={user}/>} />
-                            <Route path="/components/unauthorized" element={<Unauthorized />} />
+                            <Route path="/pages/" element={<Home user={user} />} />
+                            <Route path="/pages/tracker" element={<Tracker user={user} />} />
+                            <Route path="/pages/history" element={<History user={user} />} />
+                            <Route path="/pages/settings" element={<Settings user={user}/>} />
+                            <Route path="/pages/unauthorized" element={<Unauthorized />} />
                         </>
                     ) : (
-                        <Route path="*" element={<Navigate to="/components/login" />} />
+                        <Route path="*" element={<Navigate to="/pages/login" />} />
                     )}
                 </Routes>
             </Box>

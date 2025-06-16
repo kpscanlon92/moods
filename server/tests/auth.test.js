@@ -29,7 +29,7 @@ describe('Auth Routes', () => {
             password: 'password123'
         });
 
-        console.log(res);
+        //console.log(res);
 
         expect(res.statusCode).toBe(201);
         expect(res.body.user).toHaveProperty('email', 'test@gmail.com');

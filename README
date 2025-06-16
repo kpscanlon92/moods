@@ -32,8 +32,7 @@ client/
 ├── public/
 │   ├── index.html
 ├── src/
-│   ├── components/
-│   ├── styles/
+│   ├── pages/
 │   ├── App.jsx
 │   ├── index.js
 ├── package.json

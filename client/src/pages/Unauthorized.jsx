@@ -16,7 +16,7 @@ function Unauthorized() {
                         variant="contained"
                         color="primary"
                         component={RouterLink}
-                        to="/components/login"
+                        to="/pages/login"
                     >
                         Go to Login
                     </Button>

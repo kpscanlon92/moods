@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api from '../utils/api.js';
 
 import {
     Container,
@@ -30,7 +30,7 @@ function Settings() {
     useEffect(() => {
         const fetchUser = async () => {
             if (!token) {
-                navigate('/components/unauthorized');
+                navigate('/pages/unauthorized');
                 return;
             }
 
@@ -41,7 +41,7 @@ function Settings() {
                 setUser(res.data);
             } catch (err) {
                 localStorage.removeItem('token');
-                navigate('/components/unauthorized');
+                navigate('/pages/unauthorized');
             }
         };
 
@@ -50,7 +50,7 @@ function Settings() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/components/login');
+        navigate('/pages/login');
     };
 
     const handleChangePassword = async (e) => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../api';
+import api from '../utils/api.js';
 import { useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -35,7 +35,7 @@ function Login({ setUser }) {
             });
             localStorage.setItem('token', res.data.token);
             setUser(res.data.user);
-            navigate('/components/');
+            navigate('/pages/');
         } catch (err) {
             if (err.response) {
                 const status = err.response.status;
