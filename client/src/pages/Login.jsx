@@ -34,8 +34,12 @@ function Login({ setUser }) {
                 password,
             });
             localStorage.setItem('token', res.data.token);
-            setUser(res.data.user);
-            navigate('/pages/');
+            if (isRegistering) {
+                navigate('/pages/login');
+            } else {
+                setUser(res.data.user);
+                navigate('/pages/');
+            }
         } catch (err) {
             if (err.response) {
                 const status = err.response.status;
