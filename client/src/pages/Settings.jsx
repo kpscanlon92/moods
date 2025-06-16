@@ -53,10 +53,20 @@ function Settings() {
         navigate('/pages/login');
     };
 
+    const validatePassword = (pwd, newpwd) => {
+        const errors = [];
+        if (pwd.length < 8) errors.push('Password must be at least 8 characters.');
+        if (!/[A-Z]/.test(pwd)) errors.push('Password must include an uppercase letter.');
+        if (!/[0-9]/.test(pwd)) errors.push('Password must include a number.');
+        if (pwd !== newpwd) errors.push('Passwords don\'t match.');
+        return errors;
+    };
+
     const handleChangePassword = async (e) => {
         e.preventDefault();
-        if (newPassword !== confirmPassword) {
-            setMessage('New passwords do not match.');
+        const validationErrors = validatePassword(newPassword, confirmPassword);
+        if (validationErrors.length > 0) {
+            setMessage(validationErrors.join(' '));
             return;
         }
 
@@ -104,7 +114,7 @@ function Settings() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             localStorage.removeItem('token');
-            navigate('/api/auth/register');
+            navigate('/pages/login');
         } catch (err) {
             alert(err.response?.data?.message || 'Failed to delete account.');
         }

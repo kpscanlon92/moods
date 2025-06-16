@@ -17,14 +17,35 @@ function Login({ setUser }) {
     const [isRegistering, setIsRegistering] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [msg, setMsg] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const validatePassword = (pwd) => {
+        const errors = [];
+        if (pwd.length < 8) errors.push('Password must be at least 8 characters.');
+        if (!/[A-Z]/.test(pwd)) errors.push('Password must include an uppercase letter.');
+        if (!/[0-9]/.test(pwd)) errors.push('Password must include a number.');
+        return errors;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setMsg('');
+
+        if (isRegistering) {
+            const validationErrors = validatePassword(password);
+            if (password !== confirmPassword) {
+                validationErrors.push("Passwords don't match.");
+            }
+            if (validationErrors.length > 0) {
+                setMsg(validationErrors.join(' '));
+                setLoading(false);
+                return;
+            }
+        }
 
         const endpoint = isRegistering ? 'register' : 'login';
 
@@ -35,7 +56,10 @@ function Login({ setUser }) {
             });
             localStorage.setItem('token', res.data.token);
             if (isRegistering) {
-                navigate('/pages/login');
+                setIsRegistering(false);
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
             } else {
                 setUser(res.data.user);
                 navigate('/pages/');
@@ -93,6 +117,24 @@ function Login({ setUser }) {
                         required
                     />
 
+                    {isRegistering && (
+                        <TextField
+                            fullWidth
+                            label="Confirm Password"
+                            type="password"
+                            margin="normal"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    )}
+
+                    {isRegistering && (
+                        <Typography variant="caption" color="textSecondary">
+                            Password must be at least 8 characters, include an uppercase letter and a number.
+                        </Typography>
+                    )}
+
                     <Button
                         type="submit"
                         variant="contained"
@@ -112,6 +154,7 @@ function Login({ setUser }) {
                         onClick={() => {
                             setIsRegistering(!isRegistering);
                             setMsg('');
+                            setConfirmPassword('');
                         }}
                     >
                         {isRegistering ? 'Login' : 'Register'}
