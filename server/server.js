@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import app from './app.js';
 
@@ -10,7 +11,8 @@ await mongoose.connect(uri);
 
 // Serve static files (only in production)
 if (process.env.NODE_ENV === "production") {
-    const __dirname = path.resolve();
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
     // Catch-all for SPA routing
